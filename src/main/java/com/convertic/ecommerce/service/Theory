@@ -1,0 +1,12 @@
+** [Nebrass Lamouchi]-Pro Java Microservices with Quarkus and Kubernetes
+Ahora que ha creado las entidades, es hora de crear los servicios.
+Un servicio es un componente que envuelve la lógica empresarial.
+En este punto, no hemos discutido la lógica comercial, solo tenemos
+operaciones CRUD. Implementará estas operaciones CRUD en sus servicios.
+Necesita un servicio separado para cada entidad a fin de aplicar la práctica
+de responsabilidad única a sus servicios.
+La capa de servicio es el pegamento entre las capas de persistencia y web.
+Un servicio tomará los datos de los repositorios y aplicará su lógica
+empresarial a los datos cargados. Encapsulará los datos calculados en un
+contenedor utilizado para transferir los datos entre el Servicio y las capas Web.
+Este contenedor se denomina Objeto de transferencia de datos (DTO).
