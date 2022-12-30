@@ -1,0 +1,20 @@
+01. Definir la estructura de la Base de datos
+02. Crear el proyecto MAVEN
+03. Configurar la BD en resources/static/template/application.properties
+04. Crear el paquete domain, el cual incluye las entidades
+05. Crear las Entidades de clase con las respectivas relaciones @ManyToMany, @ManyToOne
+06. Crear el paquete web.dto
+07. Crear las clases para cada entidad con la estructura DTO
+08. Crear los repositorios
+09. Crear los servicios
+10. En cada entidad crear los metodos mapToDto que devuelcen los DTO
+11. Para las entidades DTO que tienen como atributo el id de otras clases crear el su servicio
+    el metodo que contiene el SQL que las relaciona, i.e., que trae los registros de la tabla
+    foranea que estan asociados a la entidad, pj, como PaymenDto tiene el atributo orderId,
+    por lo que debo crear en el PaymentService el metodo findOrderByPaymentId; para lo cual
+    debio ya haber sido creado findByPaymentId
+
+     private Order findOrderByPaymentId(Long id) {
+          return this.orderRepository.findByPaymentId(id)
+                    .orElseThrow(() -> new IllegalStateException("No Order exists for the Payment ID " + id));
+        }

@@ -4,6 +4,8 @@ import com.convertic.ecommerce.domain.Category;
 import com.convertic.ecommerce.repository.CategoryRepository;
 import com.convertic.ecommerce.repository.ProductRepository;
 import com.convertic.ecommerce.web.dto.CategoryDto;
+import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//@ApplicationScoped //Specifies that this class is application scoped.
+//@Slf4j
+@Transactional
 public class CategoryService {
     private final Logger log = LoggerFactory.getLogger(CustomerService.class);
     @Autowired

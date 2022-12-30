@@ -3,6 +3,8 @@ package com.convertic.ecommerce.service;
 import com.convertic.ecommerce.domain.Customer;
 import com.convertic.ecommerce.repository.CustomerRepository;
 import com.convertic.ecommerce.web.dto.CustomerDto;
+import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
+//@Slf4j
+//@ApplicationScoped //Specifies that this class is application scoped.
+@Transactional
 public class CustomerService {
 
     /*
@@ -39,19 +43,20 @@ public class CustomerService {
     }
 
     //Crear un cliente nuevo en la BD y devolverlo a la vista - Dto
-    public CustomerDto create(CustomerDto customerDto){
+    public CustomerDto createp(CustomerDto customerDto) {
         log.debug("Request to create Customer : {}", customerDto);
-        this.customerRepository.save(
-                new Customer(
-                        customerDto.getFirstName(),
-                        customerDto.getLastName(),
-                        customerDto.getEmail(),
-                        customerDto.getTelephone(),
-                        Collections.emptySet(),
-                        Boolean.TRUE
+        return mapToDto(
+                this.customerRepository.save(
+                        new Customer(
+                                customerDto.getFirstName(),
+                                customerDto.getLastName(),
+                                customerDto.getEmail(),
+                                customerDto.getTelephone(),
+                                Collections.emptySet(),
+                                Boolean.TRUE
+                        )
                 )
         );
-        return customerDto;
     }
 
     //Obtener un listado de todos los clientes de la BD
