@@ -1,0 +1,68 @@
+Creating the Persistence Layer
+If you look back at the class diagram, you’ll see these Entity classes:
+• Address
+• Cart
+• Category
+• Customer
+• Order
+• OrderItem
+• Payment
+• Product
+• Review
+
+Here are some of the enumerations:
+• CartStatus
+• OrderStatus
+• ProductStatus
+• PaymentStatus
+
+These entities will share some attributes that are always commonly used, like id,
+created date, etc. These attributes will be located in the AbstractEntity class that will
+be extended by our entities.
+
+@MappedSuperclass ①
+@EntityListeners(AuditingEntityListener.class) ②
+
+① Declares this class as JPA base class, which holds properties that will be
+  inherited by the subclasses entities
+② Activates auditing the entity using the AuditingEntityListener class[2]
+
+
+@Getter ①
+@Setter ①
+@NoArgsConstructor ②
+@ToString(callSuper = true) ③
+@Entity ④
+@Table(name = "carts") ④
+@NotNull ⑤
+@Column(nullable = false) ⑥
+
+① This Lombok annotation generates getters/setters for all fields.
+② This Lombok annotation generates a no-args constructor, which is required by JPA.
+③ This Lombok annotation generates the toString() method based on the current class
+  fields and including the superclass fields.
+④ This is an @Entity and its corresponding @Table will be named carts.
+⑤ Validation annotation used to control the integrity of the data. If the status is
+   null, a Validation Exception will be thrown.
+⑥ Column definition: name, length, and a definition of a nullability constraint.
+
+The difference between the validation annotations and constraints defined in
+the @Column is that the validation annotations are application-scoped and the
+constraints are DB scoped.
+
+@Repository ①
+public interface CartRepository extends JpaRepository<Cart, Long> { ②
+List<Cart> findByStatus(CartStatus status); ③
+List<Cart> findByStatusAndCustomerId(CartStatus status, Long customerId); ③
+}
+
+① Indicates that an annotated class is a repository, as originally
+defined by Domain-Driven Design (Eric Evans, 2003) as
+“a mechanism for encapsulating storage, retrieval, and search
+behavior which emulates a collection of objects.”
+② JPA specific extension of a repository in Spring Data JPA. This
+will enable Spring Data to find this interface and automatically
+create an implementation for it.
+③ These methods implement queries automatically using the
+Spring Data Query Methods Builder Mechanism.
+

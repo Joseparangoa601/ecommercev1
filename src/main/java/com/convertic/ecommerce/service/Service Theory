@@ -10,3 +10,20 @@ Un servicio tomará los datos de los repositorios y aplicará su lógica
 empresarial a los datos cargados. Encapsulará los datos calculados en un
 contenedor utilizado para transferir los datos entre el Servicio y las capas Web.
 Este contenedor se denomina Objeto de transferencia de datos (DTO).
+
+@Slf4j ①
+@ApplicationScoped ②
+@Transactional ③
+public class CartService {
+@Inject ④
+CartRepository cartRepository;
+
+① The Lombok annotation used to generate a logger in the class.
+When used, you have a static final log field, initialized to
+the name of your class, which you can then use to write log statements.
+② Specifies that this class is application scoped.
+③ @Transactional annotation provides the application the ability
+to declaratively control transaction boundaries.
+④ The most famous annotation in the Java EE world! It’s used to
+request an instance of the annotated field type.
+
