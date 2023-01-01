@@ -84,7 +84,6 @@ public class OrderItemService {
         this.orderRepository.save(order);
 
     }
-
     public List<OrderItemDto> findByOrderId(Long id){
         log.debug("Request to get all OrderItems of OrderId {}", id);
         return this.orderItemRepository.findById(id)

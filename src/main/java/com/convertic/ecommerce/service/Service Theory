@@ -23,7 +23,28 @@ When used, you have a static final log field, initialized to
 the name of your class, which you can then use to write log statements.
 ② Specifies that this class is application scoped.
 ③ @Transactional annotation provides the application the ability
-to declaratively control transaction boundaries.
+  to declaratively control transaction boundaries and ensure that one
+  database connection will be used for the whole database transaction duration. All SQL statements will use this
+  single isolation connection and all of them will run in the scope of the same Persistence Context.
+                                                  .
+  Hibernate adquirirá la conexión a la base de datos de una transacción JDBC
+  justo después de que comience la transacción (por ejemplo, en Spring, un método
+  anotado con @Transactional adquiere la conexión a la base de datos inmediatamente después de que se llame).
+
+  Prácticamente, la conexión a la base de datos es inútil para la aplicación hasta que se activa la primera instrucción
+  JDBC de la transacción actual; mantener la conexión de la base de datos sin usar durante este tiempo provoca una
+  penalización en el rendimiento que puede tener un gran impacto si hay muchas tareas que consumen mucho tiempo antes
+  de la primera instrucción JDBC.
+  Para evitar esta penalización en el rendimiento, puede informar a Hibernate que deshabilitó la confirmación automática,
+  por lo que no es necesario verificar. Para ello, sigue estos dos pasos:
+
+  spring.datasource.hikari.auto-commit=false
+  spring.jpa.properties.hibernate.connection.provider_disables_autocommit=true
+
+  Generally speaking, if auto-commit is set to true, then each SQL statement will have to be executed in a
+  separate physical database transaction, which may imply a different connection per statement (e.g., in an
+  environment that doesn’t support connection-per-thread, a method with two SELECT statements requires two
+
 ④ The most famous annotation in the Java EE world! It’s used to
 request an instance of the annotated field type.
 

@@ -43,7 +43,7 @@ public class CustomerService {
     }
 
     //Crear un cliente nuevo en la BD y devolverlo a la vista - Dto
-    public CustomerDto createp(CustomerDto customerDto) {
+    public CustomerDto create(CustomerDto customerDto) {
         log.debug("Request to create Customer : {}", customerDto);
         return mapToDto(
                 this.customerRepository.save(

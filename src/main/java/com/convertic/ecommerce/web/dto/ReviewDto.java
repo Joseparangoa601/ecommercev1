@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewDto {
-    private Long id;
+    private Long productId;
     private String title;
     private String description;
     private Long rating;

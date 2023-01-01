@@ -77,7 +77,9 @@ public class PaymentService {
         orderRepository.save(order);
         return mapToDto(payment, order.getId());
     }
+
+    public void delete(Long id) {
+        log.debug("Request to delete Payment : {}", id);
+        this.paymentRepository.deleteById(id);
+    }
 }
-
-
-
